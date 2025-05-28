@@ -30,6 +30,5 @@ public class VingadoresRepository implements CodinomeRepository {
 
         return vingadores.getCodinomes();
 
-
     }
 }
