@@ -19,7 +19,7 @@ public class CodinomeService {
         return sortearCodinome(codinomesDisponiveis);
     }
 
-    private List<String> listarCodinomesDisponiveis(GrupoCodinome grupoCodinome, List<String> codinomesEmUso) {
+    private List<String> listarCodinomesDisponiveis(GrupoCodinome grupoCodinome, List<String> codinomesEmUso) throws Exception {
         List<String> codinomes = buscarCodinomes(grupoCodinome);
         List<String> codinomesDisponiveis = codinomes
                 .stream()
@@ -29,7 +29,13 @@ public class CodinomeService {
         return codinomesDisponiveis;
     }
 
-    private List<String> buscarCodinomes(GrupoCodinome grupoCodinome) {
-        var codinomeRepository = codinomeRepositoryFactory.create(grupoCodinome);
+    private List<String> buscarCodinomes(GrupoCodinome grupoCodinome) throws Exception {
+        CodinomeRepository codinomeRepository = codinomeRepositoryFactory.create(grupoCodinome);
+        return codinomeRepository.buscarCodinomes();
+    }
+
+    private String sortearCodinome(List<String> codinomesDisponiveis) {
+        return codinomesDisponiveis
+                .get((int) (Math.random() * codinomesDisponiveis.size()));
     }
 }
