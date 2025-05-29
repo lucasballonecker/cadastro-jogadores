@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Cadastro de Jogador</title>
-    <link rel="stylesheet"  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
@@ -12,31 +12,42 @@
     <form th:action="@{/cadastro-jogador}" th:method="post" th:object="${jogador}">
 
         <div>
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" th:field="*{nome}" required><br><br>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" th:field="*{nome}" required><br><br>
+            <div th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Nome é obrigatório</div>
         </div>
 
         <div>
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" th:field="*{email}" required><br><br>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" th:field="*{email}" required><br><br>
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email inválido</div>
         </div>
 
         <div>
-        <label for="telefone">Telefone:</label>
-        <input type="text" id="telefone" name="telefone" th:field="*{telefone}" required><br><br>
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone" th:field="*{telefone}" required><br><br>
         </div>
 
         <div>
-        <label>Escolha um grupo de codinome</label>
+            <label>Escolha um grupo de codinome</label>
         </div>
 
         <div th:each="grupo: ${grupoCodinome}">
             <input type="radio" th:field="*{grupoCodinome}" th:value="${grupo.name()}" th:id="${grupo.name()}" required>
-            <label th:for="${grupo.name()}" th.text="${grupo.getNome()}"></label>
+            <label th:for="${grupo.name()}" th:text="${grupo.getNome()}"></label>
+        </div>
+        <div
+                th:if="${#fields.hasErrors('grupoCodinome')}" th:errors="*{grupoCodinome}">Seleção do grupo de codinome
+            é obrigatória
         </div>
 
         <div>
-  x      <button type="submit" class="btn btn-primary">Cadastrar Jogador</button>
+            <button type="submit" class="btn btn-primary">Cadastrar Jogador</button>
+            <a th:href="@{/listagem-jogadores}" class="btn btn-primary">Listar Jogadores</a>
+        </div>
+
+        <div th:if="${errorMessage}">
+            <p th:text="${erroMessage}"></p>
         </div>
     </form>
 
