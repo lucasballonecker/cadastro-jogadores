@@ -22,7 +22,7 @@ public class JogadorRepository {
                 .param("email", jogador.getEmail())
                 .param("telefone", jogador.getTelefone())
                 .param("codinome", jogador.getCodinome())
-                .param("grupo_codinome", jogador.getGrupoCodinome())
+                .param("grupo_codinome", jogador.getGrupoCodinome().name())
                 .update();
     }
 
@@ -31,7 +31,11 @@ public class JogadorRepository {
                 .param("grupo_codinome", grupoCodinome.name())
                 .query(String.class)
                 .list();
+    }
 
-
+    public List<Jogador> listarTodosOsJogadores() {
+        return jdbcClient.sql("SELECT * FROM JOGADORES ORDER BY lower(nome), id")
+                .query(Jogador.class)
+                .list();
     }
 }
